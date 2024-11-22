@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <fstream>
 using namespace std;
 
 /* 
@@ -20,8 +23,21 @@ struct Aula {
     int final;
 };
 
+vector<Aula> readFile(string filename) {
+    vector<Aula> aulas;
+
+    ifstream file(filename);
+    int inicio, final;
+    while (file >> inicio) {
+        cout << inicio << " ";
+        Aula aula;
+        aula.inicio = inicio;
+        aulas.push_back(aula);
+    }
+}
+
 int main()
 {
-    cout << "Hello, World!" << endl;
+    readFile("data/Aula10.txt");
     return 0;
 }
