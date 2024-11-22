@@ -95,8 +95,9 @@ vector<vector<Aula>> Greedy(vector<Aula> aulas, bool ordena)
     vector<vector<Aula>> salas;
     salas.push_back(vector<Aula>());
 
-    if (ordena)
+    if (ordena) {
         aulas = ordenaAulas(aulas);
+    }
 
     for (int i = 0; i < aulas.size(); i++)
     {
@@ -127,15 +128,24 @@ int main(int argc, char *argv[])
 {
     string filename = "data/Aula10.txt";
     bool ordena = true;
-    if (argc == 2)
+    if (argc >= 2)
         filename = argv[1];
 
     if (argc == 3)
-        ordena = atoi(argv[2]);
+        ordena = strcmp(argv[2],"t") == 0 ? true : false;
 
     vector<Aula> aulas = readFile(filename);
 
+    clock_t start = clock();
     vector<vector<Aula>> salas = Greedy(aulas, ordena);
-    cout << salas.size() << endl;
+    clock_t end = clock();
+
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+    // cout << "Tempo: " << time_spent << endl;
+
+    FILE *result = fopen("result.txt", "a");
+    fprintf(result, "%ld,%c,%f\n", aulas.size(), argv[2][0], time_spent);
+    fclose(result);
+
     return 0;
 }
